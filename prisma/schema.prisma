@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://yvkdnksfxizjvv:52e97fb22848b37f978608f5eb9ac437312efab3c69b410fbee986d113c1d253@ec2-52-73-149-159.compute-1.amazonaws.com:5432/d15nalf50ken96"
+}
+
+model Swipe {
+  id    Int     @id @default(autoincrement())
+  link String?
+  text String
+  tags String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
