@@ -19,17 +19,29 @@ import {
   HStack,
   Divider,
   useToast,
+  Wrap,
 } from "@chakra-ui/react";
+import { CopyIcon } from "@chakra-ui/icons";
 
 type Props = {
   feed: Swipe[];
 };
 
 const Blog: React.FC<Props> = () => {
-  const tags = ["openers", "closers"];
+  const tags = [
+    "openers",
+    "closers",
+    "hooks",
+    "hero",
+    "transitions",
+    "value-props",
+    "signup",
+    "twitter",
+    "first-lines",
+  ];
 
   const [feed, setFeed] = useState([]);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("openers");
 
   const toast = useToast();
 
@@ -100,21 +112,28 @@ const Blog: React.FC<Props> = () => {
 
             <Box pt={10}>
               <Divider />
-              <HStack spacing={4} mt={4}>
-                {tags.map((tag) => (
-                  <Tag
-                    size="md"
-                    borderRadius="full"
-                    variant="solid"
-                    colorScheme={filter === tag ? "purple" : "gray"}
-                    onClick={() => {
-                      setFilter(tag);
-                    }}
-                  >
-                    <TagLabel>{tag}</TagLabel>
-                  </Tag>
-                ))}
-              </HStack>
+              <Wrap spacing={4} mt={4}>
+                {tags.map((tag) => {
+                  const formattedTag: string = tag.replace(/^\w/, (c) =>
+                    c.toUpperCase()
+                  );
+
+                  return (
+                    <Tag
+                      size="md"
+                      borderRadius="full"
+                      variant="solid"
+                      colorScheme={filter === tag ? "purple" : "gray"}
+                      onClick={() => {
+                        setFilter(tag);
+                      }}
+                      cursor="pointer"
+                    >
+                      <TagLabel>{formattedTag}</TagLabel>
+                    </Tag>
+                  );
+                })}
+              </Wrap>
 
               <SimpleGrid columns={2} spacing={10} mt={6}>
                 {feed.map((post) => {
@@ -140,6 +159,10 @@ const Blog: React.FC<Props> = () => {
                         }}
                       >
                         <Text>{post.text}</Text>
+                        <Divider my={2} />
+                        <Text fontSize="sm" color="gray.400">
+                          Copy to clipboard
+                        </Text>
                       </Box>
 
                       {/* 
